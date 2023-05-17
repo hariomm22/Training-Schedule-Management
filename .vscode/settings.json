@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "faculty.h": "c",
-        "admin.h": "c"
+        "admin.h": "c",
+        "adminservice.h": "c"
     }
 }
