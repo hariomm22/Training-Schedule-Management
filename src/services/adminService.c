@@ -17,3 +17,23 @@ int adminLogin(){
         return 0;
     }
 }
+
+void addNewFaulty(){
+    FILE* file = fopen("../../db-files/facultyInfo.txt", "ab"); 
+    Faculty faculty;
+    printf("\nEnter Faculty Name: ");
+    scanf("%s",faculty.facultyName);
+    printf("Enter Technology Name: ");
+    scanf("%s",faculty.technologyName);
+    printf("Enter unique userName: ");
+    scanf("%s",faculty.userName);
+    printf("Enter Password: ");
+    scanf("%s",faculty.password);
+    if (file != NULL) {
+        fwrite(&faculty, sizeof(faculty), 1, file);
+        fclose(file);
+        printf("Data inserted successfully.\n");
+    } else {
+        printf("Unable to open the file.\n");
+    }
+}

@@ -12,6 +12,7 @@ typedef struct faculty
 { 
     char technologyName[30];
     char facultyName[30];
+    char userName[30];
     char password[30];
 }Faculty;
 
