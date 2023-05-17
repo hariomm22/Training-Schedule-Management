@@ -11,6 +11,7 @@ void facultyMenu() {
         printf("3. Back to main menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        //terst
 
         switch (choice) {
             case 1:

@@ -3,5 +3,6 @@
 #define ADMINSERVICE_H
 
 int adminLogin();
-
+void addNewFaulty();
+void createNewTraining();
 #endif

@@ -6,7 +6,9 @@
 int main() {
     int choice;
     while (1) {
-        printf("\nWelcome to Training Schedule Management\n");
+        printf("\n\n*********************************************************************\n");
+        printf("\t\tWelcome to Training Schedule Management\n");
+        printf("*********************************************************************\n\n");
         printf("1. Admin\n");
         printf("2. Faculty\n");
         printf("3. Quit\n");
@@ -18,7 +20,7 @@ int main() {
                 if(adminLogin()){
                 adminMenu();
                 }else{
-                    printf("Invalid Credicationl");
+                    printf("\n\t\tInvalid Credicationl..!");
                     break;
                 }
                 break;
