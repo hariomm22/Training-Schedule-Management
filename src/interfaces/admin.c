@@ -20,16 +20,17 @@ void adminMenu() {
 
         switch (choice) {
             case 1:
-                addNewFaulty();
+                addNewFaculty();
                 break;
             case 2:
                 createNewTraining();
                 break;
             case 3:
-                // Function to update an existing schedule
+                updateTraining();
                 break;
             case 4:
                 // Function to allocate a schedule to faculty
+                allocateTrainingToFaculty();
                 break;
             case 5:
                 // Function to generate a training report

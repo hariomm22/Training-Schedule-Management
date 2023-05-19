@@ -3,5 +3,6 @@
         "faculty.h": "c",
         "admin.h": "c",
         "adminservice.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

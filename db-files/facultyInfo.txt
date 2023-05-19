@@ -1,2 +1,6 @@
-chetan k,java fsd,ChetanK,Sveri@123
-Abhishek Sharma,Java python c/c++,abhisheks,123abhi
+Hariom,Java,hariomm,hariom123
+Mohan,Java,mohanm,mohan123
+Sunil,C/C++ Data Structure,sunilk,sunil123
+Sidandar,Machin leraning , python,sid,sid@123
+hariom,maths,sid,123
+ashish,java,ashish@gmail.com,sd1223

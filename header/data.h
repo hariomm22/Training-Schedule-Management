@@ -40,7 +40,7 @@ typedef struct facultyAssignments
     char venueDetail[30];
     int noOfParticipants;
     char month[30];
-    char facultyName[30];
+    char facultyEmail[30];
     char status[30]; 
 }FacultyAssignments;
 
