@@ -2,6 +2,8 @@
 #include "../header/admin.h"
 #include "../header/faculty.h"
 #include "../header/adminService.h"
+#include "../header/facultyService.h"
+#include "../header/data.h"
 
 int main() {
     int choice;
@@ -14,18 +16,27 @@ int main() {
         printf("3. Quit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-
+        char userName[30];
+        char password[30];
         switch (choice) {
             case 1:
                 if(adminLogin()){
-                adminMenu();
+                    adminMenu();
                 }else{
                     printf("\n\t\tInvalid Credicationl..!");
-                    break;
                 }
                 break;
             case 2:
-                facultyMenu(); // faculty menu function
+                    printf("\n\t\t*** Faculty Login ***\n");
+                    printf("\n Email : ");
+                    scanf(" %[^\n]s",userName);
+                    printf("\n Pasword : ");
+                    scanf(" %[^\n]s",password);
+                if(facultyLogin(userName,password)){
+                    facultyMenu(userName);
+                }else{
+                    printf("\n\t\tInvalid Credicationl..!");
+                }
                 break;
             case 3:
                 printf("Exiting the application.\n");

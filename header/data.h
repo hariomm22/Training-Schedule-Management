@@ -44,4 +44,8 @@ typedef struct facultyAssignments
     char status[30]; 
 }FacultyAssignments;
 
+typedef struct facultyAssignmentsList{
+   FacultyAssignments data;
+   struct facultyAssignmentsList *link;
+}FacultyAssignmentsList;
 #endif
