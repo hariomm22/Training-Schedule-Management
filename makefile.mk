@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra
 TARGET = a.out
 
 # Define the source files
-SRCS = src/interfaces/admin.c src/interfaces/faculty.c src/utilityServices/generateBatchId.c src/utilityServices/date.c src/services/adminService.c src/main.c 
+SRCS = src/interfaces/admin.c src/interfaces/faculty.c src/utilityServices/generateBatchId.c src/utilityServices/date.c src/services/adminService.c src/services/facultyService.c src/main.c 
 
 # Build rule for the target executable
 $(TARGET): $(SRCS)

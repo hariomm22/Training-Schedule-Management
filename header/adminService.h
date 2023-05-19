@@ -5,9 +5,7 @@
 int adminLogin();
 void addNewFaculty();
 void createNewTraining();
-bool isUserNamePresent(char * );
 void updateTraining();
 bool isBatchIdPresent(long int);
-
 void allocateTrainingToFaculty();
 #endif

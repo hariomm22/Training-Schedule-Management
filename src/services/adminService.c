@@ -5,7 +5,7 @@
 #include "../../header/adminService.h"
 #include "../../header/batchId.h"
 #include "../../header/date.h"
-
+#include "../../header/facultyService.h"
 
 int adminLogin(){
     Admin admin;
@@ -87,24 +87,6 @@ void createNewTraining(){
         printf("\n\t\tUnable to open the file.\n");
     }
 }
-
-bool isUserNamePresent(char * userName){
-     Faculty faculty;
-     FILE* file = fopen("db-files/facultyInfo.txt", "r"); 
-     if(file==NULL){
-        return false;
-     }
-     while (fscanf(file,"%[^,],%[^,],%[^,],%[^\n]\n",faculty.facultyName,faculty.technologyName,faculty.userName,faculty.password) !=EOF)
-     {
-        if(strcmp(faculty.userName,userName)==0){
-            return true;
-        }
-     }
-     fclose(file);
-     return false;
-     
-}
-
 
 void updateTraining(){
     long int batchId;
