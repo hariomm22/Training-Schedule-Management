@@ -4,7 +4,7 @@
 
 void adminMenu() {
     int choice;
-    // Display admin menu options and handle user input
+   
     while (1) {
         printf("\n\n*********************************************************************\n");
         printf("\t\tWelcome to Admin Dashboard\n");
@@ -29,11 +29,10 @@ void adminMenu() {
                 updateTraining();
                 break;
             case 4:
-                // Function to allocate a schedule to faculty
                 allocateTrainingToFaculty();
                 break;
             case 5:
-                // Function to generate a training report
+                generateReport();
                 break;
             case 6:
                 printf("Returning to the main menu.\n");

@@ -34,6 +34,7 @@ int main() {
                     scanf(" %[^\n]s",password);
                 if(facultyLogin(userName,password)){
                     facultyMenu(userName);
+
                 }else{
                     printf("\n\t\tInvalid Credicationl..!");
                 }
@@ -47,3 +48,4 @@ int main() {
         }
     }
 }
+

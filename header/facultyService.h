@@ -8,4 +8,5 @@ Faculty getLogInedFaculty(char *userName);
 FacultyAssignmentsList* getScheduleDetails(char *);
 void insertFacultyAssignmentsInFacultyAssignmentsList(FacultyAssignmentsList** , FacultyAssignmentsList**,FacultyAssignmentsList*);
 void facultyAssignmentsDisplay(FacultyAssignments);
+bool requestToCancelAllocatedSchedule(long int  , char *);
 #endif

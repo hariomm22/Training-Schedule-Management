@@ -14,7 +14,15 @@ int adminLogin(){
     scanf(" %[^\n]s",admin.userName);
     printf("Enter Password: ");
     scanf(" %[^\n]s",admin.password);
-    if(strcmp(admin.userName,"Admin")==0 && strcmp(admin.password,"Wipro@123")==0){
+    char userName[30];
+    char password[30];
+    FILE *file = fopen("db-files/adminLoginCredentials.txt","r");
+    if(file==NULL){
+        return 0;
+    }   
+    fscanf(file,"userName=%s\n",userName);
+    fscanf(file,"password=%s\n",password);
+    if(strcmp(admin.userName,userName)==0 && strcmp(admin.password,password)==0){
         return 1;
     }else{
         return 0;
@@ -30,7 +38,7 @@ void addNewFaculty(){
     scanf(" %[^\n]s",faculty.facultyName);
     printf("Enter Technology Name: ");
     scanf(" %[^\n]s",faculty.technologyName);
-    printf("Enter unique userName: ");
+    printf("Enter email address : ");
     scanf("%s",faculty.userName);
     while (isUserNamePresent(faculty.userName))
     {
@@ -115,7 +123,7 @@ void updateTraining(){
     scanf(" %[^\n]s",updatedTraining.venueDetail);
 
     FILE *file = fopen("db-files/trainingInfo.txt", "r");
-    FILE *tempFile = fopen("db-files/temp.txt", "w");  //
+    FILE *tempFile = fopen("db-files/temp.txt", "w");  
 
     if (file == NULL || tempFile == NULL) {
         printf("Error opening file.\n");
@@ -228,4 +236,31 @@ bool isBatchIdPresent(long int batchId){
      fclose(file);
      return false;
      
+}
+
+void generateReport(){
+    FILE *file = fopen("db-files/allocatedTraining.txt","r");
+    FacultyAssignments facultyAssignments;
+    printf("\n\t\t\t\t\t\t ** TRAINING  REPORT **");
+    if(file==NULL){
+
+        printf("\n\t\tNo recoed found");
+    } else{
+        while(
+            fscanf(file,"%ld,%[^,],%[^,],%d,%[^,],%[^,],%d,%[^,],%[^,],%[^\n]\n",
+                    &facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                    &facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                    &facultyAssignments.noOfParticipants, facultyAssignments.month
+                    ,facultyAssignments.facultyEmail,facultyAssignments.status) !=EOF)
+            displayReportData(facultyAssignments);
+    }
+    fclose(file);
+}
+
+void displayReportData(FacultyAssignments facultyAssignments){
+    printf("\n___________________________________________________________________________________________________________________________\n\n");
+    printf("Stream Name : %s\n\n",facultyAssignments.technology);
+    printf("Batch Start on %s   Participants : %d  Venue : %s  Faculty Email : %s  Training Status : %s\n"
+    ,facultyAssignments.month,facultyAssignments.noOfParticipants,facultyAssignments.venueDetail
+    ,facultyAssignments.facultyEmail,facultyAssignments.status);
 }

@@ -16,6 +16,7 @@ void facultyMenu(char * userName) {
         printf("Enter your choice: ");
         scanf("%d", &choice);
         //terst
+        long int batchId;
         FacultyAssignmentsList * facultyAssignmentsList;
         FacultyAssignments facultyAssignments;
         switch (choice) {
@@ -26,10 +27,15 @@ void facultyMenu(char * userName) {
                     facultyAssignmentsDisplay(facultyAssignments);
                     facultyAssignmentsList=facultyAssignmentsList->link;
                 }
-                // Function to get schedule details for faculty
                 break;
             case 2:
-                // Function to cancel an allocated schedule
+                printf("\nEnter the Batch Id of training which you want to cancel : ");
+                scanf("%ld",&batchId);
+                if(requestToCancelAllocatedSchedule(batchId,faculty.userName)){
+                    printf("\n\t\tRequest raised successfully..! Admin update soon");
+                }else{
+                    printf("\n\t\t %ld Batchid is not allocated for you..!!",batchId);
+                }
                 break;
             case 3:
                 printf("Returning to the main menu.\n");

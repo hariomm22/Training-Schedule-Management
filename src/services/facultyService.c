@@ -107,3 +107,44 @@ void facultyAssignmentsDisplay(FacultyAssignments facultyAssignments){
     printf(" Training Current Status : %s\n",facultyAssignments.status);
     printf("\n_____________________________________________\n");
 }
+
+
+bool requestToCancelAllocatedSchedule(long int batchId , char *userName){
+
+    bool flag = false;
+    FacultyAssignments facultyAssignments;
+    FILE* file = fopen("db-files/allocatedTraining.txt", "r");
+    FILE *tempFile = fopen("db-files/temp.txt", "w");
+    if (file == NULL || tempFile == NULL) {
+        return flag;
+    }
+     while (fscanf(file,"%ld,%[^,],%[^,],%d,%[^,],%[^,],%d,%[^,],%[^,],%[^\n]\n",
+                    &facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                    &facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                    &facultyAssignments.noOfParticipants, facultyAssignments.month
+                    ,facultyAssignments.facultyEmail,facultyAssignments.status) !=EOF)
+     { 
+        if( facultyAssignments.batchId == batchId && strcmp(facultyAssignments.facultyEmail,userName)==0){
+            flag=true;
+            strcpy(facultyAssignments.status,"Cancel request pending");
+            fprintf(tempFile,"%ld,%s,%s,%d,%s,%s,%d,%s,%s,%s\n",
+                    facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                    facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                    facultyAssignments.noOfParticipants, facultyAssignments.month
+                    ,facultyAssignments.facultyEmail,facultyAssignments.status);
+        } else{
+             fprintf(tempFile,"%ld,%s,%s,%d,%s,%s,%d,%s,%s,%s\n",
+                    facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                    facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                    facultyAssignments.noOfParticipants, facultyAssignments.month
+                    ,facultyAssignments.facultyEmail,facultyAssignments.status);
+        }
+     }
+    fclose(file);
+    fclose(tempFile);
+    remove("db-files/allocatedTraining.txt");
+    rename("db-files/temp.txt", "db-files/allocatedTraining.txt");
+
+    return flag;
+    
+}
