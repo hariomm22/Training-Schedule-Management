@@ -1,4 +1,1 @@
-1001,Java C++,12/02/23,45,29/03/23,pune ODC hindewadi,23,August,hariomm,allocated
-1001,Java C++,12/02/23,45,29/03/23,pune ODC hindewadi,23,August,mohanm,allocated
-1000,python,22/08/24,34,25/09/24,pune,45,August,hariomm,Cancel request pending
-1005,node and python,12/04/23,23,05/05/23,benglore 0ffice,23,April,rahulw,allocated
+1001,c/c++,12/11/23,45,27/12/23,dehli office,60,November,sunil@wipro.com,allocated

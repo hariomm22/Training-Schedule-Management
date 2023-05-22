@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../header/admin.h"
 #include "../../header/adminService.h"
 
 void adminMenu() {
     int choice;
-   
+   // Display faculty menu options and handle user input
     while (1) {
         printf("\n\n*********************************************************************\n");
         printf("\t\tWelcome to Admin Dashboard\n");
@@ -20,25 +21,48 @@ void adminMenu() {
 
         switch (choice) {
             case 1:
-                addNewFaculty();
+                system("clear");
+                addNewFaculty();  // new add faculty 
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 2:
-                createNewTraining();
+                system("clear");
+                createNewTraining(); // create new training schedule
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 3:
-                updateTraining();
+                system("clear");
+                updateTraining();   //update existing training schedule 
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 4:
-                allocateTrainingToFaculty();
+                system("clear");
+                allocateTrainingToFaculty(); // allocated trainer to the training 
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 5:
-                generateReport();
+                system("clear");
+                generateReport();  // generate report of trainnig going on with batch wise
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 6:
-                printf("Returning to the main menu.\n");
+                printf("\n\t\tReturning to the main menu.\n");
                 return;
             default:
-                printf("Invalid choice. Please try again.\n");
+                printf("\n\t\tInvalid choice. Please try again.\n");
+                getchar();
+                getchar();
+                system("clear");
                 break;
         }
     }

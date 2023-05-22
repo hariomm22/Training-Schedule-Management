@@ -4,10 +4,13 @@
 #include <string.h>
 #include "../../header/data.h"
 #include "../../header/facultyService.h"
+#define ALLOCATED_TRAINING_FILE "db-files/allocatedTraining.txt"
+#define FACULTY_FILE "db-files/facultyInfo.txt"
 
+// this function check userName in facultyInfo.txt file if record exist then return true else false
 bool isUserNamePresent(char * userName){
      Faculty faculty;
-     FILE* file = fopen("db-files/facultyInfo.txt", "r"); 
+     FILE* file = fopen(FACULTY_FILE, "r"); 
      if(file==NULL){
         return false;
      }
@@ -23,9 +26,11 @@ bool isUserNamePresent(char * userName){
      
 }
 
+
+// this function check userName and passoword of faculty in facultyInfo.txt  file if record exist then return true else false
 bool facultyLogin(char *userName , char *password){
     Faculty faculty;
-     FILE* file = fopen("db-files/facultyInfo.txt", "r"); 
+     FILE* file = fopen(FACULTY_FILE, "r"); 
      if(file==NULL){
         return false;
      }
@@ -40,9 +45,11 @@ bool facultyLogin(char *userName , char *password){
      return false;
 }
 
+
+/* this function take  userName of faculty return corresponding faculty struct */
 Faculty getLogInedFaculty(char *userName){
      Faculty faculty={0};
-     FILE* file = fopen("db-files/facultyInfo.txt", "r"); 
+     FILE* file = fopen(FACULTY_FILE, "r"); 
      if(file==NULL){
         return faculty;
      }
@@ -57,11 +64,15 @@ Faculty getLogInedFaculty(char *userName){
      return faculty;    
 }
 
+
+// this fucntion return allocated training schedule list for particular faculty 
 FacultyAssignmentsList* getScheduleDetails(char *userName){
+
+     printf("\n\t\t\t** schedule details **");
      FacultyAssignments facultyAssignments;
      FacultyAssignmentsList *head=NULL;
      FacultyAssignmentsList *tail=NULL;
-     FILE* file = fopen("db-files/allocatedTraining.txt", "r"); 
+     FILE* file = fopen(ALLOCATED_TRAINING_FILE, "r"); 
      if(file==NULL){
         return head;
      }
@@ -83,6 +94,7 @@ FacultyAssignmentsList* getScheduleDetails(char *userName){
      return head;    
 }
 
+// this function insert allocated training schedule into FacultyAssignmentsList
 void insertFacultyAssignmentsInFacultyAssignmentsList(FacultyAssignmentsList **head , FacultyAssignmentsList **tail,FacultyAssignmentsList *newFacultyAssignments){
     if((*head)==NULL){
         (*head)=newFacultyAssignments;
@@ -93,28 +105,30 @@ void insertFacultyAssignmentsInFacultyAssignmentsList(FacultyAssignmentsList **h
     }
 }
 
+
+// this function display faculty assignment 
 void facultyAssignmentsDisplay(FacultyAssignments facultyAssignments){
-    printf("\n_____________________________________________\n");
-    printf(" Batch Id : %ld\n",facultyAssignments.batchId);
-    printf(" Technology : %s\n",facultyAssignments.technology);
-    printf(" Start Date to Training : %s\n",facultyAssignments.startDate);
-    printf(" Number of Days for Training : %d\n",facultyAssignments.noOfDays);
-    printf(" End Date to Training : %s\n",facultyAssignments.endDate);
-    printf(" Training Venue Details : %s\n",facultyAssignments.venueDetail);
-    printf(" Number of participants in Training : %d\n",facultyAssignments.noOfParticipants);
-    printf(" Month which training Start : %s\n",facultyAssignments.startDate);
-    printf(" Trainer Email address : %s\n",facultyAssignments.facultyEmail);
-    printf(" Training Current Status : %s\n",facultyAssignments.status);
-    printf("\n_____________________________________________\n");
+    printf("\n______________________________________________________________________\n\n");
+    printf(" Batch Id : %ld\n\n",facultyAssignments.batchId);
+    printf(" Technology : %s\n\n",facultyAssignments.technology);
+    printf(" Start Date to Training : %s\n\n",facultyAssignments.startDate);
+    printf(" Number of Days for Training : %d\n\n",facultyAssignments.noOfDays);
+    printf(" End Date to Training : %s\n\n",facultyAssignments.endDate);
+    printf(" Training Venue Details : %s\n\n",facultyAssignments.venueDetail);
+    printf(" Number of participants in Training : %d\n\n",facultyAssignments.noOfParticipants);
+    printf(" Month which training Start : %s\n\n",facultyAssignments.startDate);
+    printf(" Trainer Email address : %s\n\n",facultyAssignments.facultyEmail);
+    printf(" Training Current Status : %s\n\n",facultyAssignments.status);
 }
 
 
+// this function update allocated training status allocated to cancel request
 bool requestToCancelAllocatedSchedule(long int batchId , char *userName){
 
     bool flag = false;
     FacultyAssignments facultyAssignments;
-    FILE* file = fopen("db-files/allocatedTraining.txt", "r");
-    FILE *tempFile = fopen("db-files/temp.txt", "w");
+    FILE* file = fopen(ALLOCATED_TRAINING_FILE, "r");
+    FILE *tempFile = fopen("db-files/temp.txt", "w"); // create temporary file in write mood and insert updated data on it
     if (file == NULL || tempFile == NULL) {
         return flag;
     }
@@ -126,7 +140,7 @@ bool requestToCancelAllocatedSchedule(long int batchId , char *userName){
      { 
         if( facultyAssignments.batchId == batchId && strcmp(facultyAssignments.facultyEmail,userName)==0){
             flag=true;
-            strcpy(facultyAssignments.status,"Cancel request pending");
+            strcpy(facultyAssignments.status,"Cancel request");
             fprintf(tempFile,"%ld,%s,%s,%d,%s,%s,%d,%s,%s,%s\n",
                     facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
                     facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
@@ -142,8 +156,8 @@ bool requestToCancelAllocatedSchedule(long int batchId , char *userName){
      }
     fclose(file);
     fclose(tempFile);
-    remove("db-files/allocatedTraining.txt");
-    rename("db-files/temp.txt", "db-files/allocatedTraining.txt");
+    remove(ALLOCATED_TRAINING_FILE);   // remove old original file
+    rename("db-files/temp.txt", ALLOCATED_TRAINING_FILE);  // rename updated temporary file into original file
 
     return flag;
     

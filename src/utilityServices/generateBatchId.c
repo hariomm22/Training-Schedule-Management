@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "../../header/batchId.h"
+
+// this function read batchid from topBatchId.txt file and return it 
 int getBatchId(){
     int batchId=0;
     FILE *file = fopen("db-files/topBatchId.txt","r");
@@ -11,6 +13,7 @@ int getBatchId(){
     return batchId;
 }
 
+// this function update topBatchId.txt file (increamenting by 1 from old value)
 void updateBatchId(int batchId){
     int newbatchId=(++batchId);
     FILE *file = fopen("db-files/topBatchId.txt","w");

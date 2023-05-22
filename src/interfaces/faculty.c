@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../../header/admin.h"
 #include "../../header/facultyService.h"
 #include "../../header/data.h"
@@ -15,18 +16,27 @@ void facultyMenu(char * userName) {
         printf("3. Back to main menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-        //terst
         long int batchId;
-        FacultyAssignmentsList * facultyAssignmentsList;
+        FacultyAssignmentsList * facultyAssignmentsList; // pointer of faculty assignment list
         FacultyAssignments facultyAssignments;
         switch (choice) {
             case 1:
-                facultyAssignmentsList=getScheduleDetails(userName);
-                while(facultyAssignmentsList!=NULL){
+                // this function return faculty assignment list
+                facultyAssignmentsList=getScheduleDetails(userName); 
+                if (facultyAssignmentsList!=NULL){
+                    // while loop for iterate facultyAssignmentsList and display faculty assignment seprately
+                    while(facultyAssignmentsList!=NULL){
                     facultyAssignments=facultyAssignmentsList->data;
-                    facultyAssignmentsDisplay(facultyAssignments);
+                    facultyAssignmentsDisplay(facultyAssignments); // this function diplay faculty assignment 
                     facultyAssignmentsList=facultyAssignmentsList->link;
+                    }
+                } else{
+                
+                    printf("\n\n\t\t you have not assigned any training yet...!\n");
                 }
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 2:
                 printf("\nEnter the Batch Id of training which you want to cancel : ");
@@ -36,12 +46,15 @@ void facultyMenu(char * userName) {
                 }else{
                     printf("\n\t\t %ld Batchid is not allocated for you..!!",batchId);
                 }
+                getchar();
+                getchar();
+                system("clear");
                 break;
             case 3:
-                printf("Returning to the main menu.\n");
+                printf("\n\t\tReturning to the main menu.\n");
                 return;
             default:
-                printf("Invalid choice. Please try again.\n");
+                printf("\n\t\tInvalid choice. Please try again.\n");
                 break;
         }
     }

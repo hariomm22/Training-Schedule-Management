@@ -4,12 +4,13 @@
 #include <string.h>
 #include <time.h>
 #include "../../header/date.h"
-
+// use time.h header
 char* strptime(const char* __restrict, const char* __restrict, struct tm* __restrict);
 
+// this function check date is valid or not if date is valid then function return true  else return false
 bool checkDateFormat(char *date){
     int days,month,year;
-    sscanf(date,"%d/%d/%d",&days,&month,&year);
+    sscanf(date,"%d/%d/%d",&days,&month,&year); // getting day month year in int formate from date string
     if(year<0 || year>99){
         return false;
     }
@@ -38,6 +39,9 @@ bool checkDateFormat(char *date){
 }
 
 
+// this function calculate endDate from startDate and number of days
+
+
 char* getEndDate(const char* startDate, int numDays) {
     struct tm start_date = {0};
     if (sscanf(startDate, "%d/%d/%d",
@@ -59,6 +63,8 @@ char* getEndDate(const char* startDate, int numDays) {
 
 
 
+
+// this function generate and return month from startDate 
 char* getMonth(char* startDate)
 {
     struct tm date = {0};

@@ -1,7 +1,3 @@
-Hariom,Java,hariomm,hariom123
-Mohan,Java,mohanm,mohan123
-Sunil,C/C++ Data Structure,sunilk,sunil123
-Sidandar,Machin leraning , python,sid,sid@123
-hariom,maths,sid,123
-ashish,java,ashish@gmail.com,sd1223
-rahul,node js,rahulw,rahul
+Sunil kadam,c/c++ embedded,sunil@wipro.com,sunil123
+Anitha david,java fullstack,anitha@gmail.com,anitha123
+Rahul verma,micro-services and aws,rahul@wipro.com,rahul123

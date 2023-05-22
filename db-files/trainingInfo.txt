@@ -1,5 +1,5 @@
-1000,python,22/08/24,34,25/09/24,pune,45,August
-1001,Java C++,12/02/23,45,29/03/23,pune ODC hindewadi,23,August
-1002,java ,22/11/99,23,15/12/99,bengole,34,November
-1003,Java python,12/08/12,60,11/10/12,pune office,23,August
-1005,node and python,12/04/23,23,05/05/23,benglore 0ffice,23,April
+
+1000,java fullstack,12/09/23,60,11/11/23,pune office,50,September
+1001,c/c++,12/11/23,45,27/12/23,dehli office,60,November
+1002,python,23/08/23,90,21/11/23,benglore office,60,August
+1003,angular ,23/12/22,60,21/02/23,pune office,35,December

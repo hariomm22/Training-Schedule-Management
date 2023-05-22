@@ -6,7 +6,14 @@
 #include "../../header/batchId.h"
 #include "../../header/date.h"
 #include "../../header/facultyService.h"
+#define ADMIN_LOG_FILE "db-files/adminLoginCredentials.txt"
+#define TRAINING_FILE "db-files/trainingInfo.txt"
+#define ALLOCATED_TRAINING_FILE "db-files/allocatedTraining.txt"
+#define FACULTY_FILE "db-files/facultyInfo.txt"
+#define STRING_SIZE 30
 
+/*this function take username and password from user and check it in
+adminLoginCredentials.txt file if username and password matched then return 1 else 0 */
 int adminLogin(){
     Admin admin;
     printf("\n          *** Admin Login ***\n");
@@ -14,9 +21,9 @@ int adminLogin(){
     scanf(" %[^\n]s",admin.userName);
     printf("Enter Password: ");
     scanf(" %[^\n]s",admin.password);
-    char userName[30];
-    char password[30];
-    FILE *file = fopen("db-files/adminLoginCredentials.txt","r");
+    char userName[STRING_SIZE];
+    char password[STRING_SIZE];
+    FILE *file = fopen(ADMIN_LOG_FILE,"r");
     if(file==NULL){
         return 0;
     }   
@@ -29,28 +36,29 @@ int adminLogin(){
     }
 }
 
+// this function is take faculty info from admin and store in facultyInfo.txt file
 void addNewFaculty(){
     //../../db-files/
-    FILE* file = fopen("db-files/facultyInfo.txt", "a"); 
+    FILE* file = fopen(FACULTY_FILE, "a"); 
     Faculty faculty;
-    printf("\n          *** Add New Faculty ***\n");
+    printf("\n\t\t*** Add New Faculty ***\n");
     printf("\nEnter Faculty Name: ");
     scanf(" %[^\n]s",faculty.facultyName);
     printf("Enter Technology Name: ");
     scanf(" %[^\n]s",faculty.technologyName);
     printf("Enter email address : ");
     scanf("%s",faculty.userName);
-    while (isUserNamePresent(faculty.userName))
+    // check entered email is already exits or not 
+    while (isUserNamePresent(faculty.userName)) // isUserNamePresent function check given userName presence if exits then return true 
     {
-        printf("\n\t %s userName is already exits..!\n\n",faculty.userName);
-         printf("Enter unique userName: ");
+        printf("\n\t %s Email is already exits..!\n\n",faculty.userName);
+         printf("Enter unique Email: ");
         scanf("%s",faculty.userName);
     }
     
     printf("Enter Password: ");
     scanf(" %[^\n]s",faculty.password);
     if (file != NULL) {
-        // fwrite(&faculty, sizeof(faculty), 1, file);
         fprintf(file,"%s,%s,%s,%s\n",faculty.facultyName,faculty.technologyName,faculty.userName,faculty.password);
         fclose(file);
         printf("\n\t\tData inserted successfully.\n");
@@ -59,27 +67,29 @@ void addNewFaculty(){
     }
 }
 
-
+// this function is create new training schedule and store the data into trainingInfo.txt file
 void createNewTraining(){
     //../../db-files/
-    FILE* file = fopen("db-files/trainingInfo.txt", "a"); 
+    FILE* file = fopen(TRAINING_FILE, "a"); 
     Training training;
-    printf("\n          *** create New training ***\n");
+    printf("\n\t\t*** create New training ***\n\n");
     training.batchId=getBatchId();
     printf("Enter Technology Name: ");
     scanf(" %[^\n]s",training.technology);
     printf("Enter startDate of trainnig (dd/mm/yy): ");
     scanf(" %[^\n]s",training.startDate);
-    while(!checkDateFormat(training.startDate)){
+     // checkDateFormat function take startdate as string input and check entered date is valid or not 
+    while(!checkDateFormat(training.startDate)){ 
         printf("\n\t Invalid date Format please enter again\n\n");
         printf("Enter startDate of trainnig (dd/mm/yy): ");
         scanf(" %[^\n]s",training.startDate);
     }
-    strcpy(training.month, getMonth(training.startDate)); // get month form startDate
+    strcpy(training.month, getMonth(training.startDate)); // getMonth function return month from startDate
     printf("Enter no of Days training: ");
     scanf("%d",&training.noOfDays);
-    strcpy(training.endDate, getEndDate(training.startDate,training.noOfDays)); // get traing endmonth from startdate
+    // getEndDate function generate and return endDate from startDate and noOfDate training going on
     printf("Enter no of Participants: ");
+    strcpy(training.endDate, getEndDate(training.startDate,training.noOfDays)); 
     scanf("%d",&training.noOfParticipants);
     printf("Enter the venueDetails : ");
     scanf(" %[^\n]s",training.venueDetail);
@@ -96,6 +106,7 @@ void createNewTraining(){
     }
 }
 
+//this function update existing Training schedule  
 void updateTraining(){
     long int batchId;
     Training updatedTraining;
@@ -122,8 +133,8 @@ void updateTraining(){
     printf("Enter the venueDetails : ");
     scanf(" %[^\n]s",updatedTraining.venueDetail);
 
-    FILE *file = fopen("db-files/trainingInfo.txt", "r");
-    FILE *tempFile = fopen("db-files/temp.txt", "w");  
+    FILE *file = fopen(TRAINING_FILE, "r");
+    FILE *tempFile = fopen("db-files/temp.txt", "w");   // create temporary file in write and insert updated data on it
 
     if (file == NULL || tempFile == NULL) {
         printf("Error opening file.\n");
@@ -149,27 +160,28 @@ void updateTraining(){
     fclose(file);
     fclose(tempFile);
 
-    remove("db-files/trainingInfo.txt");
-    rename("db-files/temp.txt", "db-files/trainingInfo.txt");
+    remove(TRAINING_FILE); // remove old original file
+    rename("db-files/temp.txt", TRAINING_FILE); // rename updated temporary file into original file
 
 }
 }
 
 
+// this function allocate training schedule to the faculty and store the into allocatedTraining.txt file
 void allocateTrainingToFaculty(){
     long int batchId;
     char userName[30];
     printf("\n          *** allocate Training To Faculty ***\n");
     printf("\nEnter the BatchId To Allocate To Tranier : ");
     scanf("%ld",&batchId);
-    if(isBatchIdPresent(batchId)){
+    if(isBatchIdPresent(batchId)){ // check batchId training present or not
         printf("\nEnter the faculty email to assing the batch : ");
         scanf("%s",userName);
-        if(isUserNamePresent(userName)){
+        if(isUserNamePresent(userName)){ // check faculty registered ot not
             Training training;
             FacultyAssignments facultyAssignments;
-            FILE * trianingFile = fopen("db-files/trainingInfo.txt","r");
-            FILE * allocatedTrainingFile = fopen("db-files/allocatedTraining.txt","a");
+            FILE * trianingFile = fopen(TRAINING_FILE,"r");
+            FILE * allocatedTrainingFile = fopen(ALLOCATED_TRAINING_FILE,"a");
             if(trianingFile==NULL || allocatedTrainingFile==NULL){
                 printf("\n\t\t Error in File Opening..!!");
             } else{
@@ -195,17 +207,10 @@ void allocateTrainingToFaculty(){
               }
               fclose(trianingFile);
               fclose(allocatedTrainingFile);
-              printf("\n\t\t Allocate schedule to faculty Successful\n\n");
-              printf(" Batch Id : %ld\n",facultyAssignments.batchId);
-              printf(" Technology : %s\n",facultyAssignments.technology);
-              printf(" Start Date to Training : %s\n",facultyAssignments.startDate);
-              printf(" Number of Days for Training : %d\n",facultyAssignments.noOfDays);
-              printf(" End Date to Training : %s\n",facultyAssignments.endDate);
-              printf(" Training Venue Details : %s\n",facultyAssignments.venueDetail);
-              printf(" Number of participants in Training : %d\n",facultyAssignments.noOfParticipants);
-              printf(" Month which training Start : %s\n",facultyAssignments.startDate);
-              printf(" Trainer Email address : %s\n",facultyAssignments.facultyEmail);
-              printf(" Training Current Status : %s\n",facultyAssignments.status);
+              printf("\n______________________________________________________________________\n");
+              printf("\n\t\t*** Allocate schedule to faculty Successful ***\n\n");
+              // after Successful training allocation this function display allocated schedule 
+              facultyAssignmentsDisplay(facultyAssignments); 
             }
 
         }else{
@@ -216,9 +221,11 @@ void allocateTrainingToFaculty(){
     }
 }
 
+
+// this function check training exist or not based of batchId
 bool isBatchIdPresent(long int batchId){
      Training training;
-     FILE* file = fopen("db-files/trainingInfo.txt", "r"); 
+     FILE* file = fopen(TRAINING_FILE, "r"); 
      if(file==NULL){
         return false;
      }
@@ -238,8 +245,10 @@ bool isBatchIdPresent(long int batchId){
      
 }
 
+
+// generate Report of on going training based on stream wise
 void generateReport(){
-    FILE *file = fopen("db-files/allocatedTraining.txt","r");
+    FILE *file = fopen(ALLOCATED_TRAINING_FILE,"r");
     FacultyAssignments facultyAssignments;
     printf("\n\t\t\t\t\t\t ** TRAINING  REPORT **");
     if(file==NULL){
@@ -257,9 +266,11 @@ void generateReport(){
     fclose(file);
 }
 
+// this function display the data of Report
 void displayReportData(FacultyAssignments facultyAssignments){
-    printf("\n___________________________________________________________________________________________________________________________\n\n");
-    printf("Stream Name : %s\n\n",facultyAssignments.technology);
+    printf("\n_______________________________________________________________________________________________________________________________\n\n");
+    printf("Stream Name : %s\t\t\t\t\t\t\t",facultyAssignments.technology);
+    printf("\t\t\t\tBatch ID : %ld\n\n",facultyAssignments.batchId);
     printf("Batch Start on %s   Participants : %d  Venue : %s  Faculty Email : %s  Training Status : %s\n"
     ,facultyAssignments.month,facultyAssignments.noOfParticipants,facultyAssignments.venueDetail
     ,facultyAssignments.facultyEmail,facultyAssignments.status);
