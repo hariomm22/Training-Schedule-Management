@@ -101,6 +101,7 @@ void createNewTraining(){
         training.noOfParticipants,training.month);
         fclose(file);
         printf("\n\t\tData inserted successfully.\n");
+        trainingDisplay(training);
     } else {
         printf("\n\t\tUnable to open the file.\n");
     }
@@ -157,6 +158,8 @@ void updateTraining(){
         }
     }
 
+    printf("\n\t\t Update Successful ..! \n");
+    trainingDisplay(updatedTraining);
     fclose(file);
     fclose(tempFile);
 
@@ -274,4 +277,16 @@ void displayReportData(FacultyAssignments facultyAssignments){
     printf("Batch Start on %s   Participants : %d  Venue : %s  Faculty Email : %s  Training Status : %s\n"
     ,facultyAssignments.month,facultyAssignments.noOfParticipants,facultyAssignments.venueDetail
     ,facultyAssignments.facultyEmail,facultyAssignments.status);
+}
+
+void trainingDisplay(Training training){
+    printf("\n______________________________________________________________________\n\n");
+    printf(" Batch Id : %ld\n\n",training.batchId);
+    printf(" Technology : %s\n\n",training.technology);
+    printf(" Start Date to Training : %s\n\n",training.startDate);
+    printf(" Number of Days for Training : %d\n\n",training.noOfDays);
+    printf(" End Date to Training : %s\n\n",training.endDate);
+    printf(" Training Venue Details : %s\n\n",training.venueDetail);
+    printf(" Number of participants in Training : %d\n\n",training.noOfParticipants);
+    printf(" Month which training Start : %s\n\n",training.month);
 }

@@ -11,4 +11,5 @@ bool isBatchIdPresent(long int);
 void allocateTrainingToFaculty();
 void generateReport();
 void displayReportData(FacultyAssignments);
+void trainingDisplay(Training);
 #endif
