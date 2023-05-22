@@ -3,3 +3,4 @@ Anitha david,java fullstack,anitha@gmail.com,anitha123
 Rahul verma,micro-services and aws,rahul@wipro.com,rahul123
 Mayank Sharma,java python,mayank@wipro.com,mayank@123
 shivani patil,python ,shivi@gmail.com,shivi@123
+Samir khan,python,samir@wipro.com,samir123
