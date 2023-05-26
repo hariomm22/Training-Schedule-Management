@@ -15,7 +15,10 @@ void facultyMenu(char * userName) {
         printf("2. Cancel allocated schedule\n");
         printf("3. Back to main menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+        if(scanf("%d", &choice) !=1){
+            choice=0;
+        }
+        fflush(stdin);
         long int batchId;
         FacultyAssignmentsList * facultyAssignmentsList; // pointer of faculty assignment list
         FacultyAssignments facultyAssignments;
@@ -35,7 +38,6 @@ void facultyMenu(char * userName) {
                     printf("\n\n\t\t you have not assigned any training yet...!\n");
                 }
                 getchar();
-                getchar();
                 system("clear");
                 break;
             case 2:
@@ -47,7 +49,6 @@ void facultyMenu(char * userName) {
                     printf("\n\t\t %ld Batchid is not allocated for you..!!",batchId);
                 }
                 getchar();
-                getchar();
                 system("clear");
                 break;
             case 3:
@@ -55,6 +56,8 @@ void facultyMenu(char * userName) {
                 return;
             default:
                 printf("\n\t\tInvalid choice. Please try again.\n");
+                getchar();
+                system("clear");
                 break;
         }
     }

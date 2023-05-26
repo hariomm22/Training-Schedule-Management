@@ -17,7 +17,10 @@ int main() {
         printf("2. Faculty\n");
         printf("3. Quit\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+        if(scanf("%d", &choice) !=1){
+            choice=0;
+        }
+        fflush(stdin);
         char userName[STRING_SIZE];
         char password[STRING_SIZE];
         switch (choice) {
@@ -55,7 +58,6 @@ int main() {
                 return 0;
             default:
                 printf("\n\t\tInvalid Input. Please try again.\n");
-                getchar();
                 getchar();
                 system("clear");
                 break;

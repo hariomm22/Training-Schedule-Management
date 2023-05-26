@@ -39,28 +39,6 @@ bool checkDateFormat(char *date){
 }
 
 
-// this function calculate endDate from startDate and number of days
-
-
-char* getEndDate(const char* startDate, int numDays) {
-    struct tm start_date = {0};
-    if (sscanf(startDate, "%d/%d/%d",
-               &start_date.tm_mday, &start_date.tm_mon, &start_date.tm_year) != 3) {
-        fprintf(stderr, "Invalid start date format\n");
-        return NULL;
-    }
-    start_date.tm_mon -= 1;
-    start_date.tm_year += 100;
-    if (start_date.tm_year < 70)
-        start_date.tm_year += 100;
-    time_t start_time = mktime(&start_date);
-    time_t new_time = start_time + (numDays * 24 * 60 * 60);
-    struct tm* new_date = localtime(&new_time);
-    char* endDate = malloc(sizeof(char) * 9);
-    strftime(endDate, 9, "%d/%m/%y", new_date);
-    return endDate;
-}
-
 
 
 
@@ -75,4 +53,41 @@ char* getMonth(char* startDate)
     };
 
     return month_names[date.tm_mon];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// this function calculate endDate from startDate and number of days
+
+char* getEndDate(const char* startDate, int numDays) {
+    struct tm start_date = {0};
+    if (sscanf(startDate, "%d/%d/%d",
+               &start_date.tm_mday, &start_date.tm_mon, &start_date.tm_year) != 3) {
+        return NULL;  // Invalid date format
+    }
+    start_date.tm_mon -= 1;  
+    start_date.tm_year += 100;  // tm_year represent 1900 
+    time_t start_time = mktime(&start_date);  // Convert start date to time_t
+    time_t new_time = start_time + (numDays * 24 * 60 * 60);  // Calculate new time
+    struct tm* new_date = localtime(&new_time);  // Convert new time to struct tm
+    char* endDate = malloc(sizeof(char) * 9); 
+    strftime(endDate, 9, "%d/%m/%y", new_date);  // Format new date as string
+    return endDate;  
+
 }

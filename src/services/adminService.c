@@ -73,7 +73,6 @@ void createNewTraining(){
     FILE* file = fopen(TRAINING_FILE, "a"); 
     Training training;
     printf("\n\t\t*** create New training ***\n\n");
-    training.batchId=getBatchId();
     printf("Enter Technology Name: ");
     scanf(" %[^\n]s",training.technology);
     printf("Enter startDate of trainnig (dd/mm/yy): ");
@@ -86,14 +85,24 @@ void createNewTraining(){
     }
     strcpy(training.month, getMonth(training.startDate)); // getMonth function return month from startDate
     printf("Enter no of Days training: ");
-    scanf("%d",&training.noOfDays);
+    // scanf("%d",&training.noOfDays);
+    while(scanf("%d",&training.noOfDays) !=1){   // check validation of input
+         printf("\n\tInvalid Input ..!\n\nEnter no of Days training: ");
+         fflush(stdin);
+    }
+
     // getEndDate function generate and return endDate from startDate and noOfDate training going on
-    printf("Enter no of Participants: ");
     strcpy(training.endDate, getEndDate(training.startDate,training.noOfDays)); 
-    scanf("%d",&training.noOfParticipants);
+
+    printf("Enter no of Participants: ");
+    // scanf("%d",&training.noOfParticipants);
+    while(scanf("%d",&training.noOfParticipants) !=1){   // check validation of input
+        printf("\n\tInvalid Input ..!\n\nEnter no of Participants: ");
+        fflush(stdin);
+    }
     printf("Enter the venueDetails : ");
     scanf(" %[^\n]s",training.venueDetail);
-  
+    training.batchId=getBatchId();
     if (file != NULL) {
         // fwrite(&faculty, sizeof(faculty), 1, file);
         fprintf(file,"%ld,%s,%s,%d,%s,%s,%d,%s\n",training.batchId,training.technology,
@@ -127,10 +136,18 @@ void updateTraining(){
     }
     strcpy(updatedTraining.month, getMonth(updatedTraining.startDate)); // get month form startDate
     printf("Enter no of Days training: ");
-    scanf("%d",&updatedTraining.noOfDays);
+    // scanf("%d",&updatedTraining.noOfDays);
+    while(scanf("%d",&updatedTraining.noOfDays) !=1){   // check validation of input
+         printf("\n\tInvalid Input ..!\n\nEnter no of Days training: ");
+         fflush(stdin);
+    }
     strcpy(updatedTraining.endDate, getEndDate(updatedTraining.startDate,updatedTraining.noOfDays)); // get traing endmonth from startdate
     printf("Enter no of Participants: ");
-    scanf("%d",&updatedTraining.noOfParticipants);
+    // scanf("%d",&updatedTraining.noOfParticipants);
+    while(scanf("%d",&updatedTraining.noOfParticipants) !=1){   // check validation of input
+        printf("\n\tInvalid Input ..!\n\nEnter no of Participants: ");
+        fflush(stdin);
+    }
     printf("Enter the venueDetails : ");
     scanf(" %[^\n]s",updatedTraining.venueDetail);
 
@@ -166,6 +183,8 @@ void updateTraining(){
     remove(TRAINING_FILE); // remove old original file
     rename("db-files/temp.txt", TRAINING_FILE); // rename updated temporary file into original file
 
+} else{
+    printf("\n\n\t\t %ld batchId is not exist..!",batchId);
 }
 }
 

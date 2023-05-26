@@ -17,7 +17,10 @@ void adminMenu() {
         printf("5. Generate training report\n");
         printf("6. Back to main menu\n");
         printf("Enter your choice: ");
-        scanf("%d", &choice);
+               if(scanf("%d", &choice) !=1){
+            choice=0;
+        }
+        fflush(stdin);
 
         switch (choice) {
             case 1:
@@ -52,7 +55,6 @@ void adminMenu() {
                 system("clear");
                 generateReport();  // generate report of trainnig going on with batch wise
                 getchar();
-                getchar();
                 system("clear");
                 break;
             case 6:
@@ -60,7 +62,6 @@ void adminMenu() {
                 return;
             default:
                 printf("\n\t\tInvalid choice. Please try again.\n");
-                getchar();
                 getchar();
                 system("clear");
                 break;
