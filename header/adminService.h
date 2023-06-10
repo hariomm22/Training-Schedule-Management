@@ -12,4 +12,7 @@ void allocateTrainingToFaculty();
 void generateReport();
 void displayReportData(FacultyAssignments);
 void trainingDisplay(Training);
+bool getCancelRequestSchedule();
+void displayCancelRequestSchedule(FacultyAssignments);
+bool approveCancelRequest();
 #endif

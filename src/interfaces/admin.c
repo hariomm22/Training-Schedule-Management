@@ -15,7 +15,8 @@ void adminMenu() {
         printf("3. Update existing schedule\n");
         printf("4. Allocate schedule to faculty\n");
         printf("5. Generate training report\n");
-        printf("6. Back to main menu\n");
+        printf("6. Approve cancel schedule request\n");
+        printf("7. Back to main menu\n");
         printf("Enter your choice: ");
                if(scanf("%d", &choice) !=1){
             choice=0;
@@ -58,6 +59,22 @@ void adminMenu() {
                 system("clear");
                 break;
             case 6:
+                system("clear");
+                printf("\n\t\t***  Approve cancel schedule request ***\n");
+                if(getCancelRequestSchedule()){
+                    if(approveCancelRequest()){
+                        printf("\n\t\t Request Approved..!");
+                    }else{
+                        printf("\n\t\tEntered Valid batch Id..!");
+                    }
+                    getchar();
+                }else{
+                    printf("\n\tNo Cancel Schdule Request Available..!");
+                }
+                getchar();
+                system("clear");
+                break;
+            case 7:
                 printf("\n\t\tReturning to the main menu.\n");
                 return;
             default:

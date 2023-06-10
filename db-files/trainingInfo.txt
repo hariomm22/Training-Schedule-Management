@@ -1,8 +1,3 @@
-1000,java fullstack,12/09/23,60,11/11/23,pune office,50,September
-1001,python,12/09/23,60,11/11/23,wipro benglore office,40,September
-1002,mayank@wipro.com,12/09/23,60,11/11/23,wipro pune office,40,September
-1003,java python,12/08/23,40,21/09/23,wipro pune office,30,August
-1004,java,12/09/23,80,01/12/23,wipro pune office,50,September
-1005,java,12/06/23,90,10/09/23,wipro pune office,40,June
-1007,python,12/09/23,90,11/12/23,pune office,50,September
-1008,python,11/09/23,60,10/11/23,pune office,40,September
+1000,java,12/09/23,78,29/11/23,pune office,45,September
+1001,python,12/08/23,50,01/10/23,indore office,35,August
+1002,java,12/09/23,45,27/10/23,pune office,35,September

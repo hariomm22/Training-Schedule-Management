@@ -49,6 +49,7 @@ void facultyMenu(char * userName) {
                     printf("\n\t\t %ld Batchid is not allocated for you..!!",batchId);
                 }
                 getchar();
+                getchar();
                 system("clear");
                 break;
             case 3:

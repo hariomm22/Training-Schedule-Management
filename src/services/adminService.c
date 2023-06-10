@@ -6,6 +6,7 @@
 #include "../../header/batchId.h"
 #include "../../header/date.h"
 #include "../../header/facultyService.h"
+#include "../../header/inputValidation.h"
 #define ADMIN_LOG_FILE "db-files/adminLoginCredentials.txt"
 #define TRAINING_FILE "db-files/trainingInfo.txt"
 #define ALLOCATED_TRAINING_FILE "db-files/allocatedTraining.txt"
@@ -44,16 +45,36 @@ void addNewFaculty(){
     printf("\n\t\t*** Add New Faculty ***\n");
     printf("\nEnter Faculty Name: ");
     scanf(" %[^\n]s",faculty.facultyName);
+    while (!nameCheck(faculty.facultyName)) // nameCheck function check name format (name can'nt contain digit or special charecter)
+    {
+        printf("\n\t %s Invalid input..!\n\n",faculty.facultyName);
+        printf("Enter Faculty Name: ");
+        scanf("%s",faculty.facultyName);
+        fflush(stdin);
+    }
     printf("Enter Technology Name: ");
     scanf(" %[^\n]s",faculty.technologyName);
     printf("Enter email address : ");
     scanf("%s",faculty.userName);
+    tolowerEmail(faculty.userName);    // if user enter email in upper case or mix case then convert into lower case 
+    while (!emailCheck(faculty.userName)) {// emailCheck function return true when email in valid format
+        printf("\n\t %s Invalid email format..!\n\n",faculty.userName);
+        printf("Enter email address : ");
+        scanf("%s",faculty.userName);
+        tolowerEmail(faculty.userName);
+    }
     // check entered email is already exits or not 
     while (isUserNamePresent(faculty.userName)) // isUserNamePresent function check given userName presence if exits then return true 
     {
         printf("\n\t %s Email is already exits..!\n\n",faculty.userName);
-         printf("Enter unique Email: ");
+        printf("Enter unique Email: ");
         scanf("%s",faculty.userName);
+        while (!emailCheck(faculty.userName)) {
+            printf("\n\t %s Invalid email format..!\n\n",faculty.userName);
+            printf("Enter email address : ");
+            scanf("%s",faculty.userName);
+            tolowerEmail(faculty.userName);
+        }
     }
     
     printf("Enter Password: ");
@@ -61,7 +82,7 @@ void addNewFaculty(){
     if (file != NULL) {
         fprintf(file,"%s,%s,%s,%s\n",faculty.facultyName,faculty.technologyName,faculty.userName,faculty.password);
         fclose(file);
-        printf("\n\t\tData inserted successfully.\n");
+        printf("\n\t\t Faculty added successfully.\n");
     } else {
         printf("\n\t\tUnable to open the file.\n");
     }
@@ -120,8 +141,11 @@ void createNewTraining(){
 void updateTraining(){
     long int batchId;
     Training updatedTraining;
-    printf("Enter the BatchId :");
-    scanf("%ld",&batchId);
+    printf("\n\tEnter the BatchId which you want to update :");
+    while(scanf("%ld",&batchId) !=1){   // check validation of input
+        printf("\n\tInvalid Input ..!\n\n\tEnter the BatchId which you want to update :");
+        fflush(stdin);
+    }
     if(isBatchIdPresent(batchId)){
     printf("\n          *** Updating training ***\n");
     updatedTraining.batchId=batchId;
@@ -195,7 +219,10 @@ void allocateTrainingToFaculty(){
     char userName[30];
     printf("\n          *** allocate Training To Faculty ***\n");
     printf("\nEnter the BatchId To Allocate To Tranier : ");
-    scanf("%ld",&batchId);
+    while(scanf("%ld",&batchId) !=1){   // check validation of input
+        printf("\n\tInvalid Input ..!\n\nEnter the BatchId To Allocate To Tranier : ");
+        fflush(stdin);
+    }
     if(isBatchIdPresent(batchId)){ // check batchId training present or not
         printf("\nEnter the faculty email to assing the batch : ");
         scanf("%s",userName);
@@ -298,6 +325,78 @@ void displayReportData(FacultyAssignments facultyAssignments){
     ,facultyAssignments.facultyEmail,facultyAssignments.status);
 }
 
+
+bool approveCancelRequest(){
+
+    bool flag = false;
+    long batchId;
+    printf("\n\tEnter the batch Id which you want to approve : ");
+    while(scanf("%ld",&batchId) !=1){   // check validation of input
+        printf("\n\tInvalid Input ..!\n\n\tEnter the batch Id which you want to approve : ");
+        fflush(stdin);
+    }
+
+    FacultyAssignments facultyAssignments;
+    FILE *file = fopen(ALLOCATED_TRAINING_FILE,"r");
+    FILE *tempFile = fopen("db-files/tempFile.txt","w");
+    if(file==NULL || tempFile==NULL){
+        return flag;
+    } 
+     while (fscanf(file,"%ld,%[^,],%[^,],%d,%[^,],%[^,],%d,%[^,],%[^,],%[^\n]\n",
+                &facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                &facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                &facultyAssignments.noOfParticipants, facultyAssignments.month
+                ,facultyAssignments.facultyEmail,facultyAssignments.status) !=EOF){
+
+        if(facultyAssignments.batchId==batchId && strcmp(facultyAssignments.status,"Cancel request")==0){
+            flag=true;
+            strcpy(facultyAssignments.status,"Unallocated");
+            fprintf(tempFile,"%ld,%s,%s,%d,%s,%s,%d,%s,%s,%s\n",
+                facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                facultyAssignments.noOfParticipants, facultyAssignments.month
+                ,facultyAssignments.facultyEmail,facultyAssignments.status);
+        }else{
+            fprintf(tempFile,"%ld,%s,%s,%d,%s,%s,%d,%s,%s,%s\n",
+                facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+                facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+                facultyAssignments.noOfParticipants, facultyAssignments.month
+                ,facultyAssignments.facultyEmail,facultyAssignments.status);
+        }
+    }
+    fclose(file);
+    fclose(tempFile);
+    remove(ALLOCATED_TRAINING_FILE);   // remove old original file
+    rename("db-files/tempFile.txt", ALLOCATED_TRAINING_FILE);  // rename updated temporary file into original file
+    return flag;
+}
+
+
+bool getCancelRequestSchedule(){
+
+    bool flag=false;
+    FacultyAssignments facultyAssignments;
+    FILE *file = fopen(ALLOCATED_TRAINING_FILE,"r");
+    while (fscanf(file,"%ld,%[^,],%[^,],%d,%[^,],%[^,],%d,%[^,],%[^,],%[^\n]\n",
+        &facultyAssignments.batchId, facultyAssignments.technology, facultyAssignments.startDate, 
+        &facultyAssignments.noOfDays,facultyAssignments.endDate, facultyAssignments.venueDetail, 
+        &facultyAssignments.noOfParticipants, facultyAssignments.month,
+        facultyAssignments.facultyEmail,facultyAssignments.status) !=EOF){
+        if(strcmp(facultyAssignments.status,"Cancel request")==0){
+            displayCancelRequestSchedule(facultyAssignments);
+            flag=true;
+        }
+    }
+    fclose(file);
+    return flag;
+}
+
+void displayCancelRequestSchedule(FacultyAssignments facultyAssignments){    
+    printf("\n__________________________________________________________________________________________________\n");
+    printf("\nBatchId : %ld\tStream : %s\tFaculty Email : %s\tStatus : %s\n",
+    facultyAssignments.batchId,facultyAssignments.technology,
+    facultyAssignments.facultyEmail,facultyAssignments.status);
+}
 void trainingDisplay(Training training){
     printf("\n______________________________________________________________________\n\n");
     printf(" Batch Id : %ld\n\n",training.batchId);

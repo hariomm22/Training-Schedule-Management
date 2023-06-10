@@ -1,7 +1,4 @@
-Sunil kadam,c/c++ embedded,sunil@wipro.com,sunil123
-Anitha david,java fullstack,anitha@gmail.com,anitha123
-Rahul verma,micro-services and aws,rahul@wipro.com,rahul123
-Mayank Sharma,java python,mayank@wipro.com,mayank@123
-shivani patil,python ,shivi@gmail.com,shivi@123
-Samir khan,python,samir@wipro.com,samir123
-hariom mahajan,Java,hariom@gmail.com,hari123
+rahul,java,rahul@wipro.com,rahul123
+Hariom Mahajan,java,hari@wipro.com,hariom123
+Hariom,java,hariom@wipro.com,hariom123
+Satish,C/C++,satya@jim.com,satya@123
