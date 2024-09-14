@@ -2,3 +2,7 @@ rahul,java,rahul@wipro.com,rahul123
 Hariom Mahajan,java,hari@wipro.com,hariom123
 Hariom,java,hariom@wipro.com,hariom123
 Satish,C/C++,satya@jim.com,satya@123
+Ravi kumar,java,ravi@wipro.com,ravi123
+subh,java,subh@wipro.com,subh123
+vikas sharma,java,vikas@wipro.com,vikas123
+Ajit sharma,java ,ajit@wipro.com,ajit123

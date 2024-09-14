@@ -95,7 +95,8 @@ FacultyAssignmentsList* getScheduleDetails(char *userName){
 }
 
 // this function insert allocated training schedule into FacultyAssignmentsList
-void insertFacultyAssignmentsInFacultyAssignmentsList(FacultyAssignmentsList **head , FacultyAssignmentsList **tail,FacultyAssignmentsList *newFacultyAssignments){
+void insertFacultyAssignmentsInFacultyAssignmentsList(FacultyAssignmentsList **head , FacultyAssignmentsList **tail,
+FacultyAssignmentsList *newFacultyAssignments){
     if((*head)==NULL){
         (*head)=newFacultyAssignments;
         (*tail)=newFacultyAssignments;
@@ -138,7 +139,7 @@ bool requestToCancelAllocatedSchedule(long int batchId , char *userName){
                     &facultyAssignments.noOfParticipants, facultyAssignments.month
                     ,facultyAssignments.facultyEmail,facultyAssignments.status) !=EOF)
      { 
-        if( facultyAssignments.batchId == batchId && strcmp(facultyAssignments.facultyEmail,userName)==0){
+        if( facultyAssignments.batchId == batchId && strcmp(facultyAssignments.facultyEmail,userName)==0 && strcmp(facultyAssignments.status,"allocated")==0){
             flag=true;
             strcpy(facultyAssignments.status,"Cancel request");
             fprintf(tempFile,"%ld,%s,%s,%d,%s,%s,%d,%s,%s,%s\n",

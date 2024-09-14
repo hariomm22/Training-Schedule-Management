@@ -1,1 +1,8 @@
 1001,python,12/08/23,50,01/10/23,indore office,35,August,rahul@wipro.com,Unallocated
+1003,Python java,12/09/23,45,27/10/23,dehli office,60,September,ravi@wipro.com,Unallocated
+1002,java,12/09/23,45,27/10/23,pune office,35,September,subh@wipro.com,Cancel request
+1003,Python java,12/09/23,45,27/10/23,dehli office,60,September,subh@wipro.com,Unallocated
+1004,java,15/08/23,90,13/11/23,pune office,100,August,vikas@wipro.com,allocated
+1005,Java,15/08/23,60,14/10/23,pune office,50,August,ajit@wipro.com,Unallocated
+1003,Python java,12/09/23,45,27/10/23,dehli office,60,September,satya@jim.com,allocated
+1003,Python java,12/09/23,45,27/10/23,dehli office,60,September,ravi@wipro.com,allocated
